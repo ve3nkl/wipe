@@ -250,7 +250,7 @@ for entry in scandir(args.maildir):
       process = False
       with open(join(args.maildir, entry.name), "r", encoding='latin-1') as f:
         
-        for ix in range(0,5):
+        for ix in range(0,50):    # Read no mor ethan 1-st 50 lines in a serach for 'Date:'
           line = f.readline()
           if not line:
             break
