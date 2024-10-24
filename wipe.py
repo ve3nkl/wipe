@@ -1,7 +1,7 @@
 """
 
   WInlink Position Extractor (WIPE).
-  (c) Copyright 2022, Nikolai Ozerov VE3NKL
+  (c) Copyright 2022-2024, Nikolai Ozerov VE3NKL
   
   MIT License
   ----------------------------------------------------------------------
@@ -139,6 +139,7 @@ def qth_list(string):
 parser = argparse.ArgumentParser(description='WInlink Position Extractor (WIPE)')
 parser.add_argument('maildir', type=str, help='directory path where WINLINK mail is located')
 parser.add_argument('-o', '--output', type=str, help='path and file name for the output GPX file')
+parser.add_argument('-okml', '--output-kml', type=str, help='path and file name for the output KML file')
 group = parser.add_mutually_exclusive_group(required=False)
 group.add_argument('-a', '--after', type=lambda s: datetime.datetime.strptime(s, '%Y/%m/%d'), 
                    help="process only emails with date more recent that the one specified")
@@ -250,7 +251,7 @@ for entry in scandir(args.maildir):
       process = False
       with open(join(args.maildir, entry.name), "r", encoding='latin-1') as f:
         
-        for ix in range(0,50):    # Read no mor ethan 1-st 50 lines in a serach for 'Date:'
+        for ix in range(0,500):
           line = f.readline()
           if not line:
             break
@@ -321,7 +322,7 @@ else:
 
 """
  
-  If an output argument was specified, generate the waypoint file from the 
+  If an output argument was specified, generate the waypoint file (GPX type) from the 
   collected station info.
 
 """
@@ -335,7 +336,41 @@ if args.output:
       fo.write('  <wpt lat="' + str(s.lat) + '" lon="' + str(s.lon) + '">\n')
       fo.write('    <name>' + s.callsign + '</name>\n')
       fo.write('  </wpt>\n')
+    fo.write('  <wpt lat="' + str(s.latitude) + '" lon="' + str(s.longitude) + '">\n')
+    fo.write('    <name>HOME STATION</name>\n')
+    fo.write('  </wpt>\n')
     fo.write('</gpx>\n')            
+    
+"""
+ 
+  If an output-kml argument was specified, generate the waypoint file (KML type) from the 
+  collected station info.
+
+"""
+if args.output_kml:
+  
+  with open(args.output_kml, "w", encoding='latin-1') as fo:
+
+    fo.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+    fo.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
+    fo.write('<Document>\n')
+    for s in stations_in_order:
+      fo.write('<Placemark>\n')
+      fo.write('  <name>' + s.callsign + '</name>\n')
+      fo.write('  <description>' + s.callsign + 'Winlink Station</description>\n')
+      fo.write('  <Point>\n')
+      fo.write('    <coordinates>' + str(round(s.lon,5)) + ',' + str(round(s.lat,5)) + ',0</coordinates>\n')
+      fo.write('  </Point>\n')
+      fo.write('</Placemark>\n')
+    fo.write('<Placemark>\n')
+    fo.write('  <name>HOME STATION</name>\n')
+    fo.write('  <description> Home Winlink Station</description>\n')
+    fo.write('  <Point>\n')
+    fo.write('    <coordinates>' + str(round(qth.longitude,5)) + ',' + str(round(qth.latitude,5)) + ',0</coordinates>\n')
+    fo.write('  </Point>\n')
+    fo.write('</Placemark>\n')
+    fo.write('</Document>\n')
+    fo.write('</kml>')
 
 """
 
@@ -371,8 +406,8 @@ for s in stations_in_order:
       
   print(s.callsign.ljust(12) + " " + 
         s.when.strftime("%Y/%m/%d %H:%M") + " " + 
-        str(s.lat).rjust(10) + " " + 
-        str(s.lon).rjust(10) + " " + 
+        str(round(s.lat,5)).rjust(10) + " " + 
+        str(round(s.lon,5)).rjust(10) + " " + 
         s.spot.get_MHGrid() + " " +
         ("" if qth is None else str(round(distance/1000,1)).rjust(8) + " " + 
            str(az).rjust(4) + " " + az_name)
