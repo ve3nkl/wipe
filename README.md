@@ -1,6 +1,6 @@
 # WI(nlink) P(osition) E(xtractor)
 ## Overview
-Stations can send their location information using Check-In and other forms. Some Winlink clients have no ability to extract and use this information (for example, by displaying it on a map). If such a client saves the emails as separate text files in a specific directory, this python script can scan the emails, extract station positions and display this information in an easy to read form. It also can create waypoints file in the GPX or KML format. Both of them can be used by a variety of GPS/Mapping software to visually put the stations on a map. KML file, for example, can be with Google Maps. 
+Stations can send their location information using Check-In and other forms. Some Winlink clients have no ability to extract and use this information (for example, by displaying it on a map). If such a client saves the emails as separate text files in a specific directory, this python script can scan the emails, extract station positions and display this information in an easy to read form. It also can create waypoints file in the GPX or KML format. Both of them can be used by a variety of GPS/Mapping software to visually put the stations on a map. KML file, for example, can be used with Google Maps. 
 ## License 
 The code is released under the MIT License.
 ## Installing the Script
