@@ -1,6 +1,34 @@
 # WI(nlink) P(osition) E(xtractor)
 ## Overview
 Stations can send their location information using Check-In and other forms. Some Winlink clients have no ability to extract and use this information (for example, by displaying it on a map). If such a client saves the emails as separate text files in a specific directory, this python script can scan the emails, extract station positions and display this information in an easy to read form. It also can create waypoints file in the GPX or KML format. Both of them can be used by a variety of GPS/Mapping software to visually put the stations on a map. KML file, for example, can be used with Google Maps. 
+## An Example of a Produced Report
+If you specify your own position, the report will include direction and distance info for each of the Winlink stations. An example below is based on an actual report with call signs partially scrambled and latitude/longitude positions rounded for privacy reasons.
+
+    $ python wipe.py -d 7 -q FN03gu $PATINBOX
+    
+    Specified QTH coordinates are: 
+       Latitude: 43.80000  
+      Longitude: -79.40000  
+    Scanning emails sent on or later than 2024/10/21 13:47 (UTC) ...  
+  
+              Total emails processed: 154  
+    Emails scanned for position info: 15  
+          Position entries extracted: 10  
+     Callsign      Date / Time     Latitude  Lognitude   M.Grid  Dist(km)  Azimuth   
+    ------------ ---------------- ---------- ---------- -------- -------- ---------  
+    VE3XX        2024/10/23 13:14      43.80  -79.00000 FN03ht59      7.5  111 E-SE
+    VE3XXX       2024/10/22 21:57   43.90000  -79.00000 FN03gx09     16.3  350 N   
+    VA3XXX       2024/10/23 20:56    43.6000    -79.000 FN03hq55     19.7  160 S-SE
+    VA3XX        2024/10/23 19:27   44.00000  -79.00000 FN04di76     59.0  342 N-NW
+    VE3XX        2024/10/22 12:16    44.0000  -78.00000 FN04no50     93.8   30 N-NE
+    VE3XXX       2024/10/23 19:35   43.00000  -80.20000 EN93vd54     99.4  217 SW  
+    VE3XXX       2024/10/23 21:55   44.00000  -78.20000 FN04ve16    104.8   69 E-NE
+    VE3XX        2024/10/24 09:28     46.000   -77.0000 FN16fd25    295.6   31 N-NE
+    VE3XXX       2024/10/23 21:21   45.00000  -75.60000 FN25dg86    339.2   64 E-NE
+    VE6XXX       2024/10/23 14:22   53.00000  -113.7000 DO33di37   2706.1  279 W
+
+Note, that one of the parameters for calling the wipe script includes an environment variable \$PATINBOX. I found it convenient to set it up pointing at the PAT inbox directory. That way you can reference it without the need to remember its location.
+
 ## License 
 The code is released under the MIT License.
 ## Installing the Script
