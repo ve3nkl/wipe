@@ -69,5 +69,6 @@ will produce a test.gpx file which could be imported into the Garmin BaseCamp so
 > https://opentopomap.org 
 
 Another similar optional parameter, -okml, is used to produce a file containing waypoints in the KML format. File in this format could be imported into Google custom maps. Here is an example of such a map:
+
 ![Example Google map created using the KML file](example-map.jpg) 
 
