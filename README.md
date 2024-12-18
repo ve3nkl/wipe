@@ -68,3 +68,6 @@ One optional parameter is -o that can be used to specify an output file name whe
 will produce a test.gpx file which could be imported into the Garmin BaseCamp software which will display the stations on any available map. There are also some online products that support GPX format files. One of them is:
 > https://opentopomap.org 
 
+Another similar optional parameter, -okml, is used to produce a file containing waypoints in the KML format. File in this format could be imported into Google custom maps. Here is an example of such a map:
+![Example Google map created using the KML file](example-map.jpg) 
+
