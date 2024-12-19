@@ -357,7 +357,7 @@ if args.output_kml:
     for s in stations_in_order:
       fo.write('<Placemark>\n')
       fo.write('  <name>' + s.callsign + '</name>\n')
-      fo.write('  <description>' + s.callsign + 'Winlink Station</description>\n')
+      fo.write('  <description>' + s.callsign + ' Winlink Station</description>\n')
       fo.write('  <Point>\n')
       fo.write('    <coordinates>' + str(round(s.lon,5)) + ',' + str(round(s.lat,5)) + ',0</coordinates>\n')
       fo.write('  </Point>\n')
